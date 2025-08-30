@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import {
+  FacebookAuthProvider,
   getAuth,
+  GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -44,9 +46,38 @@ export default function Login() {
       .then((result) => {
         const user = result.user;
         console.log("google login successful", user);
+        nevigate("/welcome");
       })
       .catch((error) => {
-        console.log("Google login failed", error);
+        console.error("Google login failed", error);
+        nevigate("/");
+      });
+  }
+  function handleFacebookLogin() {
+    const provider = new FacebookAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log("fb login success", user);
+        nevigate("/welcome");
+      })
+      .catch((error) => {
+        console.error("fb login failed", error);
+        nevigate("/");
+      });
+  }
+  function handleGithubLogin() {
+    const provider = new GithubAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log("github login success", user);
+        nevigate("/welcome");
+      })
+      .catch((error) => {
+        console.error("github login failed", error);
       });
   }
   return (
@@ -110,11 +141,17 @@ export default function Login() {
               <FaGoogle />
               <span>Google</span>
             </button>
-            <button className="flex items-center space-x-2 bg-blue-400 px-4 py-2 rounded-lg text-white hover:bg-blue-500">
+            <button
+              onClick={handleFacebookLogin}
+              className="flex items-center space-x-2 bg-blue-400 px-4 py-2 rounded-lg text-white hover:bg-blue-500"
+            >
               <FaFacebook />
               <span>Facebook</span>
             </button>
-            <button className="flex items-center space-x-2 bg-gray-700 px-4 py-2 rounded-lg text-white hover:bg-gray-800">
+            <button
+              onClick={handleGithubLogin}
+              className="flex items-center space-x-2 bg-gray-700 px-4 py-2 rounded-lg text-white hover:bg-gray-800"
+            >
               <FaGithub />
 
               <span>Github</span>
