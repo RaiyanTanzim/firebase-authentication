@@ -2,19 +2,22 @@ import { getAuth, signOut } from "firebase/auth";
 import React from "react";
 import { useNavigate } from "react-router";
 import app from "../firebase/firebase.config";
+import { useAuth } from "../context/AuthContext";
 
 export default function WelcomePage() {
   const nevigate = useNavigate();
   const auth = getAuth(app);
+  const { currentUser } = useAuth();
+  console.log(currentUser);
   const handleSignout = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        nevigate("/");
+        nevigate("/login");
       })
       .catch((error) => {
         // An error happened.
-        console.log(error.message)
+        console.log(error.message);
       });
   };
   return (
