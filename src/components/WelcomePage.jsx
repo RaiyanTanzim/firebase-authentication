@@ -3,8 +3,9 @@ import React from "react";
 import { useNavigate } from "react-router";
 import app from "../firebase/firebase.config";
 import { useAuth } from "../context/AuthContext";
+import UserProfile from "./UserProfile";
 
-export default function WelcomePage() {
+export default function WelcomePage({}) {
   const nevigate = useNavigate();
   const auth = getAuth(app);
   const { currentUser } = useAuth();
@@ -21,13 +22,22 @@ export default function WelcomePage() {
       });
   };
   return (
-    <div className="bg-gray-200 text-center p-8">
+    <div className="bg-gray-200 text-center p-4">
       <div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome...</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          Welcome, {currentUser?.email}
+        </h2>
         <p className="text-lg font-semibold text-indigo-900 mt-4">
           Successfully logged in.
         </p>
       </div>
+      <UserProfile
+        userName={currentUser?.displayName || "User"}
+        email={currentUser?.email || "N/A"}
+        picture={currentUser?.photoURL}
+        emailVarified={currentUser?.emailVerified}
+        userId={currentUser?.uid}
+      />
       <div>
         <button
           onClick={handleSignout}

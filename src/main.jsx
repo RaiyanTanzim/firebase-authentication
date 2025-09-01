@@ -9,6 +9,7 @@ import WelcomePage from "./components/WelcomePage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 
 import PrivateRoute from "./routers/PrivateRoute.jsx";
+import UpdateProfile from "./components/UpdateProfile.jsx";
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
@@ -25,6 +26,7 @@ createRoot(document.getElementById("root")).render(
             </PrivateRoute>
           }
         />
+        <Route path="/update-profile" element={<UpdateProfile />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>

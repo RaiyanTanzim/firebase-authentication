@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 
@@ -22,6 +22,24 @@ export const AuthProvider = ({ children }) => {
     });
     return () => unsubscribe();
   }, [auth]);
-  const value = { currentUser, loading };
+
+  // update profile finctionality
+  const updateUserProfile = async (newProfile) => {
+    if (currentUser) {
+      try {
+        await updateProfile(currentUser, newProfile);
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
+          ...newProfile,
+        }));
+      } catch (error) {
+        console.error("Error Updating Profile", error.message);
+      }
+    } else {
+      throw new Error("No user is currently signed in");
+    }
+  };
+
+  const value = { currentUser, loading, updateUserProfile };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

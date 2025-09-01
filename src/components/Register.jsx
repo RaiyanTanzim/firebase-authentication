@@ -82,7 +82,7 @@ export default function Register() {
         </form>
 
         {/* social login */}
-        <div className="text-center space-y-4">
+        {/* <div className="text-center space-y-4">
           <p className="text-gray-600">Or signup with</p>
           <div className="flex items-center justify-center gap-4">
             <button className="flex items-center space-x-2 bg-red-400 px-4 py-2 rounded-lg text-white hover:bg-red-500">
@@ -99,7 +99,7 @@ export default function Register() {
               <span>Github</span>
             </button>
           </div>
-        </div>
+        </div> */}
 
         <p className="text-gray-900 text-center">
           Already have an account?{" "}
